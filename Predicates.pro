@@ -28,10 +28,23 @@ is_grid_line(Line) :-
     \+ is_number_line(Line, _).
 
 % Find symbols and their positions in the trimmed puzzle
-get_symbols_positions(TrimmedPuzzle, SymbolsPositions) :-
+get_symbols_positions(TrimmedPuzzle, (Width, _Height), SymbolsPositions) :-
     findall(symbol_at(Symbol, X, Y), (
         nth0(Y, TrimmedPuzzle, Line),
-        string_chars(Line, Chars),
-        nth0(X, Chars, Symbol),
-        \+ char_type(Symbol, space)
+        split_string(Line, " ", "", Symbols),
+        % Take only the grid symbols, excluding clues
+        length(GridSymbols, Width),
+        append(GridSymbols, _Clues, Symbols),
+        nth0(X, GridSymbols, Symbol),
+        Symbol \= ""
     ), SymbolsPositions).
+
+% Predicate to collect right edge clues
+get_right_edge_clues(TrimmedPuzzle, (Width, _Height), RightEdgeClues) :-
+    findall(clue_at(Clue, Y), (
+        nth0(Y, TrimmedPuzzle, Line),
+        split_string(Line, " ", "", Symbols),
+        nth0(Width, Symbols, Clue),
+        Clue \= ""
+    ), RightEdgeClues).
+    
