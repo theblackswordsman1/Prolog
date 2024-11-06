@@ -7,7 +7,7 @@
 % commands to use: 
 %   swipl
 %   ['Prolog.pro'].
-%   read_file_line_by_line('puzzle_0.txt').
+%   process_puzzle('puzzle_0.txt').
 
 % Read file line by line and process each line
 read_file_line_by_line('puzzle_0.txt', GridLines, GridSize) :-
