@@ -10,8 +10,8 @@
 %   process_puzzle('puzzle_0.txt').
 
 % Read file line by line and process each line
-read_file_line_by_line('puzzle_0.txt', GridLines, GridSize, ColumnClues) :-
-    open('puzzle_0.txt', read, Stream, [encoding(utf8)]),
+read_file_line_by_line(File, GridLines, GridSize, ColumnClues) :-
+    open(File, read, Stream, [encoding(utf8)]),
     read_lines(Stream, [], GridLines, none, GridSize, none, ColumnClues),
     close(Stream).
 
